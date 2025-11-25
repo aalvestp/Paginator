@@ -1,0 +1,24 @@
+{
+  "name": "pdf-paginator",
+  "version": "2.0.0",
+  "description": "Automated PDF generation with headers and footers - Now with remote web interface",
+  "main": "paginator.js",
+  "scripts": {
+    "start": "node paginator.js",
+    "agent": "node agent.js",
+    "agent:dev": "nodemon agent.js"
+  },
+  "dependencies": {
+    "sharp": "^0.33.0",
+    "pdfkit": "^0.15.0",
+    "jimp": "^0.22.10",
+    "express": "^4.18.2",
+    "ws": "^8.14.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

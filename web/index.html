@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Paginator - Remote Control</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📄 PDF Paginator</h1>
+            <p class="subtitle">Remote Control Interface</p>
+            <div class="connection-status">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="connectionStatus">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Configuration Section -->
+        <section class="config-section">
+            <div class="config-card">
+                <h2>⚙️ Agent Configuration</h2>
+                <div class="form-group">
+                    <label for="agentUrl">Agent URL:</label>
+                    <input
+                        type="text"
+                        id="agentUrl"
+                        placeholder="ws://localhost:3838"
+                        value="ws://localhost:3838"
+                    >
+                    <small>The WebSocket URL of your local agent</small>
+                </div>
+                <div class="form-group">
+                    <label for="apiKey">API Key:</label>
+                    <input
+                        type="password"
+                        id="apiKey"
+                        placeholder="Enter your API key"
+                    >
+                    <small>Found in .api-key file or agent console output</small>
+                </div>
+                <button id="connectBtn" class="btn btn-primary">
+                    Connect to Agent
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Interface Section -->
+        <section class="main-section" id="mainSection" style="display: none;">
+            <div class="upload-card">
+                <h2>📤 Upload Page Files</h2>
+
+                <!-- Document Title Input -->
+                <div class="form-group">
+                    <label for="documentTitle">Document Title:</label>
+                    <input
+                        type="text"
+                        id="documentTitle"
+                        placeholder="e.g., LÍNGUA PORTUGUESA"
+                        class="title-input"
+                    >
+                </div>
+
+                <!-- File Upload Zone -->
+                <div
+                    class="drop-zone"
+                    id="dropZone"
+                >
+                    <div class="drop-zone-content">
+                        <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <p class="drop-zone-text">
+                            Drag & Drop PNG files here<br>
+                            or click to browse
+                        </p>
+                        <p class="drop-zone-hint">
+                            Files must be named: {number}_*.png
+                        </p>
+                    </div>
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".png"
+                        multiple
+                        style="display: none;"
+                    >
+                </div>
+
+                <!-- File List -->
+                <div class="file-list" id="fileList" style="display: none;">
+                    <h3>Selected Files (<span id="fileCount">0</span>)</h3>
+                    <div id="fileItems"></div>
+                    <button id="clearFiles" class="btn btn-secondary">Clear All</button>
+                </div>
+
+                <!-- Options -->
+                <div class="options-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="downloadPdf" checked>
+                        <span>Download PDF to browser</span>
+                    </label>
+                    <small>If unchecked, PDF will only be saved to agent's folder</small>
+                </div>
+
+                <!-- Generate Button -->
+                <button
+                    id="generateBtn"
+                    class="btn btn-success btn-large"
+                    disabled
+                >
+                    Generate PDF
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-card" id="progressCard" style="display: none;">
+                <h3>Processing...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Preparing...</p>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-card" id="resultCard" style="display: none;">
+                <div class="result-content">
+                    <div class="result-icon" id="resultIcon"></div>
+                    <h3 id="resultTitle">Success!</h3>
+                    <p id="resultMessage"></p>
+                    <div class="result-actions" id="resultActions"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instructions -->
+        <section class="instructions">
+            <details>
+                <summary>ℹ️ How to use</summary>
+                <div class="instructions-content">
+                    <ol>
+                        <li>Start the local agent on your computer (double-click <code>start-agent.bat</code>)</li>
+                        <li>Copy the API key from the agent console or <code>.api-key</code> file</li>
+                        <li>Enter the agent URL and API key above, then click "Connect"</li>
+                        <li>Upload your numbered PNG files (e.g., <code>1_cover.png</code>, <code>2_page.png</code>)</li>
+                        <li>Enter the document title</li>
+                        <li>Click "Generate PDF" and wait for processing</li>
+                        <li>Download the PDF or find it in your Paginator folder</li>
+                    </ol>
+                    <h4>File Naming Requirements:</h4>
+                    <ul>
+                        <li>Files must start with a number followed by underscore</li>
+                        <li>Example: <code>1_Introduction.png</code>, <code>2_Chapter-One.png</code></li>
+                        <li>Page 1 is always treated as cover (no header/footer)</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <footer class="footer">
+            <p>PDF Paginator v2.0 - Remote Control Edition</p>
+            <p>Agent must be running on your local computer</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

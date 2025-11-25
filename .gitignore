@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Output files
+final_document.pdf
+*.pdf
+
+# API key (security)
+.api-key
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+temp/
+
+# Sample content (optional - remove if you want to include)
+Construcao-de-frases-e-periodos/
